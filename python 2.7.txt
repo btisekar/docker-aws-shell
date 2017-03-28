@@ -1,0 +1,12 @@
+FROM centos:latest
+USER root
+
+RUN yum install wget gcc httpd -y                                       # install wget httpd to download python from sourec and gcc for executing the configure 
+                       
+RUN wget http://www.python.org/ftp/python/2.7.6/Python-2.7.6.tar.xz     # download the python file 
+
+RUN xz -d Python-2.7.6.tar.xz                                           # extract and untar 
+
+RUN tar -xvf Python-2.7.6.tar
+
+RUN  /Python-2.7.6/configure                                           #after all dependancies are installed run configure to install python 

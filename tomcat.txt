@@ -1,0 +1,59 @@
+FROM centos:latest
+
+
+USER root
+
+#  installing java 
+
+RUN yum -y update; yum clean all    
+
+#install wget and net-tools to download oracle and apache files
+
+RUN yum install wget net-tools elinks -y
+
+RUN cd /opt/java
+
+RUN wget --no-cookies --no-check-certificate --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" "http://download.oracle.com/otn-pub/java/jdk/8u45-b14/jdk-8u45-linux-i586.tar.gz"
+
+RUN tar -zxvf jdk-8u45-linux-x64.tar.gz
+
+
+# TO UPDATE JAVA AND ITS EXECUTABLES
+
+RUN update-alternatives --install /usr/bin/java java /opt/java/jdk1.8.0_45/bin/java 100  ; update-alternatives --config java 
+
+#To update java c 
+
+RUN  update-alternatives --install /usr/bin/javac javac /opt/java/jdk1.8.0_45/bin/javac 100 ; update-alternatives --config javac
+
+#To update jre
+
+RUN update-alternatives --install /usr/bin/jar jar /opt/java/jdk1.8.0_45/bin/jar 100 ;update-alternatives --config jar
+
+#installing tomcat
+
+# download tomcat tar file 
+
+cd /opt/tomcat
+
+RUN wget http://www.us.apache.org/dist/tomcat/tomcat-7/v7.0.75/bin/apache-tomcat-7.0.75.tar.gz
+
+RUN tar xzf apache-tomcat-7.0.75.tar.gz
+
+
+# expose ofr the container to use port 8080
+EXPOSE 8080 
+
+#Set up environment variables 
+
+ENV JAVA_HOME=/opt/java/jdk1.8.0_45/
+ENV JAVA_JRE=/opt/java/jdk1.8.0._45/jre
+ENV CATALINA_BASE=/opt/tomcat
+ENV CATALINA_HOME=/opt/tomcat
+
+
+# To start tomcat and access the url on container instantiation
+
+ENTRYPOINT [ "/opt/tomcat/bin/catalina.sh", "run" ]
+
+ENTRYPOINT elinks://localhost:8080

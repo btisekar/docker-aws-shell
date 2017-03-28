@@ -1,0 +1,7 @@
+
+# will separate the comma separated hostnames and redirect the values to a file 
+sed "s/,/\n/g" list.txt >> host1.txt
+
+will use host1 as input with hostnames as in needed for the format of pssh and it will excute echo parllely on all the servers
+
+pssh -h host1.txt -l root -A echo " hi"

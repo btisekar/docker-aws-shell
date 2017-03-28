@@ -1,0 +1,13 @@
+FROM centos:latest
+MAINTAINER 
+
+USER root
+
+RUN yum -y update; yum clean all                   # check for updates
+
+
+RUN yum -y install epel-release; yum clean all     #install epel repo to install mongodb package 
+
+RUN yum -y install mongodb-server; yum clean all   #install the mongodb server
+
+RUN mkdir -p /data/db                              # MongoDB requires a data directory
