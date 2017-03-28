@@ -1,0 +1,66 @@
+#!/bin/bash
+
+# step 1:
+ Store all the hostname inside a array
+#
+
+HOSTNAME=('HOST1' 'HOST2' 'HOST3' 'HOST4' 'HOST5' 'HOST6')
+ USER="bilal"
+ #HOSTNAME=('127.0.0.1')
+ echo ${HOSTNAME[@]}
+
+
+
+
+
+# Step 2: Create a function to take ssh loop through every hostname
+ 	
+
+
+function_for_ssh()
+{                  
+
+
+for var1 in ${HOSTNAME[@]}
+ 	
+
+do echo $var1
+	 
+
+ssh $USER@$var1 "$1" > $var1.txt  done
+
+}
+
+
+
+# Step 3: Create a function to take user inputecho
+
+
+
+echo "Welcome to Multiple SSH"
+
+
+echo "Usage"
+echo "exit() ::> exit /n 
+
+#To continue Enter the command
+
+"
+VARNAME="DEFAULT"
+EXIT="exit" 
+while [ "$VARNAME" != $EXIT ]
+
+
+do
+echo "Enter the command"
+IFS= read -r VARNAME 
+
+if [ "$VARNAME" != $EXIT ]
+
+
+then
+	echo "$VARNAME" 
+	function_for_ssh "$VARNAME"
+
+fi
+done
